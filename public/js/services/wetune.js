@@ -8,7 +8,7 @@ define(['/socket.io/socket.io.js'], function(){
         $.subscribe('services/wetune/login', $.proxy(this, 'login'));
         $.subscribe('services/wetune/logout', $.proxy(this, 'logout'));
         $.subscribe('services/wetune/change', $.proxy(this, 'change'));
-        this.socket.on('wetune/changed', function(coor){
+        this.socket.on('table/changed', function(coor){
           $.publish('services/wetune/changed', [coor]);
         });
       },
@@ -16,13 +16,13 @@ define(['/socket.io/socket.io.js'], function(){
         this.socket = io.connect(this.url);
       },
       login: function(username) {
-        this.socket.emit('wetune/login', {'user': username});
+        this.socket.emit('login', {'user': username});
       },
       logout: function() {
-        this.socket.emit('wetune/logout');
+        this.socket.emit('logout');
       },
       change: function(coor) {
-        this.socket.emit('wetune/change', coor);      
+        this.socket.emit('table/change', coor);      
       }
     };
 

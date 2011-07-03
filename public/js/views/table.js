@@ -9,11 +9,11 @@ function(tmpl, template_table){
         '/audio/491__skiptracer__DjembeCheapMicSessionUno_35_.wav',
         '/audio/947__vate__sint1.wav',
         '/audio/471__skiptracer__DjembeCheapMicSessionUno_15_.wav',
-        '/audio/.wav',
-        '/audio/.wav',
-        '/audio/.wav',
-        '/audio/.wav',
-        '/audio/.wav'
+        '/audio/947__vate__sint1.wav',
+        '/audio/947__vate__sint1.wav',
+        '/audio/947__vate__sint1.wav',
+        '/audio/947__vate__sint1.wav',
+        '/audio/947__vate__sint1.wav'
       ],
       init: function() {
         this.initTable();
@@ -26,7 +26,15 @@ function(tmpl, template_table){
         $('#stop').click($.proxy(this, 'onStop'));
       },
       onChanged: function(coor) {
-        alert('ok');
+        if (coor.active === 1){
+          this.activateField(coor.x, coor.y); 
+          $('[data-rowindex='+ coor.y +']').find('[data-index='+ coor.x +']')
+            .addClass('active');
+        } else {
+          this.deactivateField(coor.x, coor.y); 
+          $('[data-rowindex='+ coor.y +']').find('[data-index='+ coor.x +']')
+            .removeClass('active');
+        }
       },
       onFieldClick: function(e) {
         var $element = $(e.target);

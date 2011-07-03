@@ -30,13 +30,15 @@ app.configure('production', function(){
 
 // Routes
 
+// Index page
 app.get('/', function(req, res) {
   res.render('index', {
-    title: 'Express',
+    title: 'WE TUNE',
     bodyId: 'index'
   });
 });
 
+// Table (json)
 app.get('/table/:group', function(req, res) {
   redis_client.hgetall(req.params.group +':table', function(err, replies){
     var table = [];
@@ -59,14 +61,17 @@ app.get('/table/:group', function(req, res) {
 
 var io = require('socket.io').listen(app);
 
+// Start server
 app.listen(3000);
 
+// Set up 'websockets'
 io.sockets.on('connection', function (socket) {
   group = 'techno';
-  socket.on('wetune/change', function (coor) {
+  socket.join(group);
+  socket.on('table/change', function (coor) {
     console.log(coor);
     redis_client.hset(group +':table', coor.x +':'+ coor.y, parseInt(coor.active, 10));
-    socket.broadcast.emit('wetune/change', coor);
+    socket.broadcast.to(group).emit('table/changed', coor);
   });
 });
 
