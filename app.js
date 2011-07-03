@@ -61,12 +61,12 @@ app.get('/table/:group', function(req, res) {
 
 var io = require('socket.io').listen(app);
 
-io.configure('development', function() {
-  io.set('store', new require('socket.io').RedisStore); 
-});
-io.configure('production', function() {
-  io.set('store', new require('socket.io').RedisStore); 
-});
+//io.configure('development', function() {
+//  io.set('store', new require('socket.io').RedisStore); 
+//});
+//io.configure('production', function() {
+//  io.set('store', new require('socket.io').RedisStore); 
+//});
 
 // Start server
 app.listen(3000);
