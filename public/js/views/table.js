@@ -65,7 +65,13 @@ function(tmpl, template_table){
         for (var i = 0; i < data.table.length; i++) {
           var row = [];
           for (var k = 0; k < data.table[i].length; k++){
-            row.push(data.table[i][k]); 
+            if (data.table[i][k] == 0) {
+              row.push(0);
+            }
+            else {
+              row.push(new Audio(this.samples[k])); 
+              
+            }
           }
           this.table.push(row);
         }
