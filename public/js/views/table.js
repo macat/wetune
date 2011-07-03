@@ -82,7 +82,9 @@ function(tmpl, template_table){
       },
       intervalID: null,
       onPlay: function() {
+        if (!this.intervalID) {
           this.intervalID = setInterval($.proxy(this, 'playMachine'), 125);
+        }
       },
       onStop: function() {
         clearInterval(this.intervalID);
