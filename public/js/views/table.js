@@ -5,6 +5,7 @@ function(tmpl, template_table){
       url: 'http://localhost:3000',
       table: [],
       beat: 0,
+      group: '',
       samples: [
         '/audio/491__skiptracer__DjembeCheapMicSessionUno_35_.wav',
         '/audio/947__vate__sint1.wav',
@@ -24,6 +25,8 @@ function(tmpl, template_table){
         $('#machine').delegate('.c', 'click', $.proxy(this, 'onFieldClick'));
         $('#play').click($.proxy(this, 'onPlay'));
         $('#stop').click($.proxy(this, 'onStop'));
+
+        $('#machine,#controls').removeClass('hide');
       },
       onChanged: function(coor) {
         if (coor.active === 1){
@@ -56,7 +59,7 @@ function(tmpl, template_table){
         this.table[y][x] = 0;
       },
       initTable: function() {
-        $.getJSON('/table/techno', $.proxy(this, 'onInitDataReceived'));
+        $.getJSON('/table/'+ this.group, $.proxy(this, 'onInitDataReceived'));
       },
       onInitDataReceived: function(data) {
         for (var i = 0; i < data.table.length; i++) {

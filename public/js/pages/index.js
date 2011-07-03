@@ -1,7 +1,12 @@
-define(['services/wetune', 'views/table'], 
-function(wetune, table){
+define(['services/wetune', 'views/table', 'views/user_group'], 
+function(wetune, table, user_group){
   wetune({}); 
-  table({});
+  user_group({});
+  $.subscribe('/views/user_group/loggedin', function(group, username){
+      table({
+        group: group
+      });
+  });
 
 });
 

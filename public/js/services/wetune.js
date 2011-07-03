@@ -15,8 +15,8 @@ define(['/socket.io/socket.io.js'], function(){
       connect: function() {
         this.socket = io.connect(this.url);
       },
-      login: function(username) {
-        this.socket.emit('login', {'user': username});
+      login: function(group, username) {
+        this.socket.emit('login', group, username);
       },
       logout: function() {
         this.socket.emit('logout');
