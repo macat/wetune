@@ -87,10 +87,7 @@ io.sockets.on('connection', function (socket) {
     socket.broadcast.to(socket.get('group')).emit('user/loggedout', username);
   });
   socket.on('table/change', function (coor) {
-    console.log('change:');
-    console.log(coor);
-    var group = socket.get('group');
-    console.log(group);
+    var group = 'minimal'; // socket.get('group');
     redis_client.hset(group +':table', coor.x +':'+ coor.y, parseInt(coor.active, 10));
     socket.broadcast.to(group).emit('table/changed', coor);
   });
