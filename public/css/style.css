@@ -1,0 +1,26 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.c {
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin: 0 2px;
+    background: #aaa;
+}
+.active {
+    background: #faa;
+}
+.highlighted {
+    background: #aaf;
+}
+.row {
+    clear: left;
+    height: 20px;
+}

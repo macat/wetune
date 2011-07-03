@@ -1,0 +1,10 @@
+<% for (var i = 0; i < rows.length; i++) { %>
+  <div class="row" data-rowindex="<%=i%>">
+    <% var row = rows[i]; for (var k = 0; k < row.length; k++) { %>
+      <% var classes = ['c']; %>
+      <% if (row[k] != false) { classes.push('active'); } %>
+      <span class="<%=classes.join(' ') %>" data-index="<%=k%>"></span>
+    <% } %>
+  </div>
+<% } %>
+  
