@@ -9,7 +9,7 @@ define(['/socket.io/socket.io.js'], function(){
         $.subscribe('services/wetune/logout', $.proxy(this, 'logout'));
         $.subscribe('services/wetune/change', $.proxy(this, 'change'));
         this.socket.on('wetune/changed', function(coor){
-          $.publish('services/wetune/changed', coor);
+          $.publish('services/wetune/changed', [coor]);
         });
       },
       connect: function() {

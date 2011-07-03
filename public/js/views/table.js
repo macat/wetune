@@ -36,10 +36,10 @@ function(tmpl, template_table){
         var rowindex = $element.parent().data('rowindex');
         if (this.table[rowindex][index] === false){
           this.activateField(index, rowindex); 
-          $.publish('services/wetune/change', {x: index, y: rowindex, active: true});
+          $.publish('services/wetune/change', [{x: index, y: rowindex, active: true}]);
         } else {
           this.deactivateField(index, rowindex); 
-          $.publish('services/wetune/change', {x: index, y: rowindex, active: false});
+          $.publish('services/wetune/change', [{x: index, y: rowindex, active: false}]);
         }
       },
       activateField: function(x, y) {
