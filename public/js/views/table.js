@@ -17,7 +17,6 @@ function(tmpl, template_table){
       ],
       init: function() {
         this.initTable();
-        this.renderTable();
 
         $.subscribe('services/wetune/changed', $.proxy(this, 'onChanged'));
 
@@ -34,28 +33,32 @@ function(tmpl, template_table){
         $element.toggleClass('active'); 
         var index = $element.data('index');
         var rowindex = $element.parent().data('rowindex');
-        if (this.table[rowindex][index] === false){
+        if (this.table[rowindex][index] === 0){
           this.activateField(index, rowindex); 
-          $.publish('services/wetune/change', [{x: index, y: rowindex, active: true}]);
+          $.publish('services/wetune/change', [{x: index, y: rowindex, active: 1}]);
         } else {
           this.deactivateField(index, rowindex); 
-          $.publish('services/wetune/change', [{x: index, y: rowindex, active: false}]);
+          $.publish('services/wetune/change', [{x: index, y: rowindex, active: 0}]);
         }
       },
       activateField: function(x, y) {
         this.table[y][x] = new Audio(this.samples[y]);
       },
       deactivateField: function(x, y) {
-        this.table[y][x] = false;
+        this.table[y][x] = 0;
       },
       initTable: function() {
-        for (var i = 0; i < 8; i++) {
+        $.getJSON('/table/techno', $.proxy(this, 'onInitDataReceived'));
+      },
+      onInitDataReceived: function(data) {
+        for (var i = 0; i < data.table.length; i++) {
           var row = [];
-          for (var k = 0; k < 32; k++){
-            row.push(false); 
+          for (var k = 0; k < data.table[i].length; k++){
+            row.push(data.table[i][k]); 
           }
           this.table.push(row);
         }
+        this.renderTable();
       },
       renderTable: function() {
         $('#machine').html(tmpl(template_table, { rows: this.table }));

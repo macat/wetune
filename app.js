@@ -6,6 +6,8 @@
 var express = require('express');
 
 var app = module.exports = express.createServer();
+var redis = require("redis"),
+    redis_client = redis.createClient();
 
 // Configuration
 
@@ -28,10 +30,29 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
   res.render('index', {
     title: 'Express',
     bodyId: 'index'
+  });
+});
+
+app.get('/table/:group', function(req, res) {
+  redis_client.hgetall(req.params.group +':table', function(err, replies){
+    var table = [];
+    for (var k = 0; k < 8; k++) {
+      var row = [];
+      for (var i = 0; i < 32; i++) {
+        if (replies[i +':'+ k] && replies[i +':'+ k] == 1){
+          row.push(1);
+        } else {
+          row.push(0);
+        }
+      }
+      table.push(row);
+    }
+    res.contentType('json');
+    res.send({'table': table});
   });
 });
 
@@ -41,8 +62,11 @@ var io = require('socket.io').listen(app);
 app.listen(3000);
 
 io.sockets.on('connection', function (socket) {
+  group = 'techno';
   socket.on('wetune/change', function (coor) {
     console.log(coor);
+    redis_client.hset(group +':table', coor.x +':'+ coor.y, parseInt(coor.active, 10));
+    socket.broadcast.emit('wetune/change', coor);
   });
 });
 
