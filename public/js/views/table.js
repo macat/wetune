@@ -69,7 +69,7 @@ function(tmpl, template_table){
               row.push(0);
             }
             else {
-              row.push(new Audio(this.samples[k])); 
+              row.push(new Audio(this.samples[i])); 
               
             }
           }
