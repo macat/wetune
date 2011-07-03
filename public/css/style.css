@@ -24,3 +24,10 @@ a {
     clear: left;
     height: 20px;
 }
+
+.button {
+    padding: 3px;
+    background: #999;
+    margin: 8px;
+    cursor: pointer;
+}

@@ -4,52 +4,49 @@ function(tmpl, template_table){
     view = {
       url: 'http://localhost:3000',
       table: [],
+      beat: 0,
+      samples: [
+        '/audio/491__skiptracer__DjembeCheapMicSessionUno_35_.wav',
+        '/audio/947__vate__sint1.wav',
+        '/audio/471__skiptracer__DjembeCheapMicSessionUno_15_.wav',
+        '/audio/.wav',
+        '/audio/.wav',
+        '/audio/.wav',
+        '/audio/.wav',
+        '/audio/.wav'
+      ],
       init: function() {
         this.initTable();
         this.renderTable();
 
         $.subscribe('services/wetune/changed', $.proxy(this, 'onChanged'));
 
-            var samples = [
-              '/audio/491__skiptracer__DjembeCheapMicSessionUno_35_.wav',
-              '/audio/947__vate__sint1.wav',
-              '/audio/471__skiptracer__DjembeCheapMicSessionUno_15_.wav',
-              '/audio/.wav',
-              '/audio/.wav',
-              '/audio/.wav',
-              '/audio/.wav',
-              '/audio/.wav'
-            ];
-            for (var i = 0; i < 16; i++) samples.push();
-            var beat = 0;
-            var ttable = this.table;
-            $(function(){
-                $('#machine').delegate('.c', 'click', function(e){
-                    $(this).toggleClass('active'); 
-                    var index = $(this).data('index');
-                    var rowindex = $(this).parent().data('rowindex');
-                    if (ttable[rowindex][index] === false){
-                      ttable[rowindex][index] = new Audio(samples[rowindex]);
-                    } else {
-                      ttable[rowindex][index] = false; 
-                    }
-                });
-                window.setInterval(function(){
-                    for (var i = 0; i < 8; i++) {
-                      if (ttable[i][beat]) {
-                        ttable[i][beat].play();
-                      }
-                    }
-                    $('.highlighted').removeClass('highlighted');
-                    $('[data-index='+beat +']').addClass('highlighted');
-                    beat++;
-                    if (beat > 31) beat = 0;
-                }, 125);
-            });
 
+        $('#machine').delegate('.c', 'click', $.proxy(this, 'onFieldClick'));
+        $('#play').click($.proxy(this, 'onPlay'));
+        $('#stop').click($.proxy(this, 'onStop'));
       },
       onChanged: function(coor) {
         alert('ok');
+      },
+      onFieldClick: function(e) {
+        var $element = $(e.target);
+        $element.toggleClass('active'); 
+        var index = $element.data('index');
+        var rowindex = $element.parent().data('rowindex');
+        if (this.table[rowindex][index] === false){
+          this.activateField(index, rowindex); 
+          $.publish('services/wetune/change', {x: index, y: rowindex, active: true});
+        } else {
+          this.deactivateField(index, rowindex); 
+          $.publish('services/wetune/change', {x: index, y: rowindex, active: false});
+        }
+      },
+      activateField: function(x, y) {
+        this.table[y][x] = new Audio(this.samples[y]);
+      },
+      deactivateField: function(x, y) {
+        this.table[y][x] = false;
       },
       initTable: function() {
         for (var i = 0; i < 8; i++) {
@@ -62,6 +59,24 @@ function(tmpl, template_table){
       },
       renderTable: function() {
         $('#machine').html(tmpl(template_table, { rows: this.table }));
+      },
+      intervalID: null,
+      onPlay: function() {
+          this.intervalID = setInterval($.proxy(this, 'playMachine'), 125);
+      },
+      onStop: function() {
+        clearInterval(this.intervalID);
+      },
+      playMachine: function() {
+        for (var i = 0; i < 8; i++) {
+          if (this.table[i][this.beat]) {
+            this.table[i][this.beat].play();
+          }
+        }
+        $('.highlighted').removeClass('highlighted');
+        $('[data-index='+this.beat +']').addClass('highlighted');
+        this.beat++;
+        if (this.beat > 31) this.beat = 0;
       }
 
     };
