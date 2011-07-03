@@ -61,6 +61,13 @@ app.get('/table/:group', function(req, res) {
 
 var io = require('socket.io').listen(app);
 
+io.configure('development', function() {
+  io.set('store', new require('socket.io').RedisStore); 
+});
+io.configure('production', function() {
+  io.set('store', new require('socket.io').RedisStore); 
+});
+
 // Start server
 app.listen(3000);
 
@@ -68,8 +75,22 @@ app.listen(3000);
 io.sockets.on('connection', function (socket) {
   group = 'techno';
   socket.join(group);
+  socket.on('login', function(group, username) {
+    console.log('login');
+    console.log(group);
+    socket.set('group', group);
+    socket.set('user', username, function(){
+      socket.broadcast.to(group).emit('user/loggedin', username);
+    });
+  });
+  socket.on('logout', function(username) {
+    socket.broadcast.to(socket.get('group')).emit('user/loggedout', username);
+  });
   socket.on('table/change', function (coor) {
+    console.log('change:');
     console.log(coor);
+    var group = socket.get('group');
+    console.log(group);
     redis_client.hset(group +':table', coor.x +':'+ coor.y, parseInt(coor.active, 10));
     socket.broadcast.to(group).emit('table/changed', coor);
   });
