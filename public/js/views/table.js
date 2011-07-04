@@ -2,19 +2,18 @@ define(['lib/simple_template', 'text!views/templates/table.template'],
 function(tmpl, template_table){
   var 
     view = {
-      url: 'http://wetune.us',
       table: [],
       beat: 0,
       group: '',
       samples: [
-        '/audio/491__skiptracer__DjembeCheapMicSessionUno_35_.wav',
-        '/audio/947__vate__sint1.wav',
-        '/audio/471__skiptracer__DjembeCheapMicSessionUno_15_.wav',
-        '/audio/947__vate__sint1.wav',
-        '/audio/947__vate__sint1.wav',
-        '/audio/947__vate__sint1.wav',
-        '/audio/947__vate__sint1.wav',
-        '/audio/947__vate__sint1.wav'
+        '/audio/491__skiptracer__DjembeCheapMicSessionUno_35_.ogg',
+        '/audio/947__vate__sint1.ogg',
+        '/audio/471__skiptracer__DjembeCheapMicSessionUno_15_.ogg',
+        '/audio/21583__djgriffin__beast_stab_d.ogg',
+        '/audio/21585__djgriffin__sub_bass_stab_1.ogg',
+        '/audio/924__sleep__PTXSNA_2.ogg',
+        '/audio/36535__ErrorCell___Sky_BassDrum044.ogg',
+        '/audio/4197__RealRhodesSounds__Cminor7.ogg'
       ],
       init: function() {
         this.initTable();

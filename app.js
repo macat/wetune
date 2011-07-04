@@ -22,10 +22,12 @@ app.configure(function(){
 
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  app.set('serverIOSocket', 'http://localhost:3000');
 });
 
 app.configure('production', function(){
   app.use(express.errorHandler()); 
+  app.set('serverIOSocket', 'http://wetune.us:81');
 });
 
 // Routes
@@ -34,7 +36,10 @@ app.configure('production', function(){
 app.get('/', function(req, res) {
   res.render('index', {
     title: 'WE TUNE',
-    bodyId: 'index'
+    bodyId: 'index',
+    clientSettings: JSON.stringify({
+      serverIOSocket: app.settings.serverIOSocket
+    })
   });
 });
 
