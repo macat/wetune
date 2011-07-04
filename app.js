@@ -78,7 +78,7 @@ app.listen(3000);
 
 // Set up 'websockets'
 io.sockets.on('connection', function (socket) {
-  group = 'techno';
+  group = 'minimal';
   socket.join(group);
   socket.on('login', function(group, username) {
     console.log('login');
