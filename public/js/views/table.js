@@ -2,7 +2,7 @@ define(['lib/simple_template', 'text!views/templates/table.template'],
 function(tmpl, template_table){
   var 
     view = {
-      url: 'http://localhost:3000',
+      url: 'http://wetune.us',
       table: [],
       beat: 0,
       group: '',

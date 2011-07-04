@@ -2,7 +2,7 @@ define(['/socket.io/socket.io.js'], function(){
   var 
     service = {
       socket: null,
-      url: 'http://wetune.us:3000',
+      url: 'http://wetune.us:81',
       init: function() {
         this.connect();
         $.subscribe('services/wetune/login', $.proxy(this, 'login'));
