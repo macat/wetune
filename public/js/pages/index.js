@@ -8,12 +8,12 @@ function(wetune, table, user_group){
     // Initialize user login/logout toolbox
     user_group({});
 
-    $.subscribe('/views/user_group/loggedin', function(group, username){
-      
+    $.subscribe('views/user_group/loggedin', function(group, username){
       table({
         group: group
       });
     });
+
   });
 });
 

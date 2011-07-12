@@ -19,6 +19,7 @@ function(tmpl, template_table){
         this.initTable();
 
         $.subscribe('services/wetune/changed', $.proxy(this, 'onChanged'));
+        $.subscribe('services/wetune/logout', $.proxy(this, 'onLogout'));
 
 
         $('#machine').delegate('.c', 'click', $.proxy(this, 'onFieldClick'));
@@ -37,6 +38,11 @@ function(tmpl, template_table){
           $('[data-rowindex='+ coor.y +']').find('[data-index='+ coor.x +']')
             .removeClass('active');
         }
+      },
+      onLogout: function() {
+        this.onStop();
+        $('#machine,#controls').addClass('hide');
+        $('#machine').empty();
       },
       onFieldClick: function(e) {
         var $element = $(e.target);
@@ -87,6 +93,7 @@ function(tmpl, template_table){
       },
       onStop: function() {
         clearInterval(this.intervalID);
+        this.intervalID = null;
       },
       playMachine: function() {
         for (var i = 0; i < 8; i++) {
