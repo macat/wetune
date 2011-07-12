@@ -1,19 +1,19 @@
-define(['lib/simple_template', 'text!views/templates/table.template'], 
-function(tmpl, template_table){
+define(['lib/simple_template', 'lib/buzz', 'text!views/templates/table.template'], 
+function(tmpl, buzz, template_table){
   var 
     view = {
       table: [],
       beat: 0,
       group: '',
       samples: [
-        '/audio/491__skiptracer__DjembeCheapMicSessionUno_35_.ogg',
-        '/audio/947__vate__sint1.ogg',
-        '/audio/471__skiptracer__DjembeCheapMicSessionUno_15_.ogg',
-        '/audio/21583__djgriffin__beast_stab_d.ogg',
-        '/audio/21585__djgriffin__sub_bass_stab_1.ogg',
-        '/audio/924__sleep__PTXSNA_2.ogg',
-        '/audio/36535__ErrorCell___Sky_BassDrum044.ogg',
-        '/audio/4197__RealRhodesSounds__Cminor7.ogg'
+        '/audio/491__skiptracer__DjembeCheapMicSessionUno_35_',
+        '/audio/947__vate__sint1',
+        '/audio/471__skiptracer__DjembeCheapMicSessionUno_15_',
+        '/audio/21583__djgriffin__beast_stab_d',
+        '/audio/21585__djgriffin__sub_bass_stab_1',
+        '/audio/924__sleep__PTXSNA_2',
+        '/audio/36535__ErrorCell___Sky_BassDrum044',
+        '/audio/4197__RealRhodesSounds__Cminor7'
       ],
       init: function() {
         this.initTable();
@@ -74,8 +74,10 @@ function(tmpl, template_table){
               row.push(0);
             }
             else {
-              row.push(new Audio(this.samples[i])); 
-              
+              row.push(new buzz.sound(this.samples[i], {
+                formats: ['ogg', 'mp3'],
+                autoload: true
+              })); 
             }
           }
           this.table.push(row);
@@ -113,6 +115,7 @@ function(tmpl, template_table){
     var v = Object.create(view);
     $.extend(v, config);
     v.init();
+    return v;
   }; 
 });
 
