@@ -1,27 +1,28 @@
-h1 We tune
-#login.toolbar
-  form#loginform(action='', method='post').hide
-    label(for='username') Username:
-    input(name='username')
-    select(name='group')
-      option(value='minimal') Minimal
-      option(value='progressive') Progressive
-      option(value='hiphop') Hip Hop
-    input(type='submit', name='submit', value='Login')
+#main
+  h1 We tune
+  #login.toolbar
+    form#loginform(action='', method='post').hide
+      label(for='username') Username:
+      input(name='username')
+      select(name='group')
+        option(value='minimal') Minimal
+        option(value='progressive') Progressive
+        option(value='hiphop') Hip Hop
+      input(type='submit', name='submit', value='Login')
 
-#logout.hide.toolbar
-  span Logged in:
-  span#user
-  span (
-  span#group
-  span )
-  span.button Logout
-  
+  #logout.hide.toolbar
+    span Logged in:
+    span#user
+    span (
+    span#group
+    span )
+    span.button Logout
+    
 
-#machine.hide
-#controls.hide
-  span#play.button play
-  span#stop.button stop
-#description
-  p.
-    Super
+  #machine.hide
+  #controls.hide
+    span#play.button play
+    span#stop.button stop
+  #description
+    p.
+      This experimental project helps to collaborate on music real-time.

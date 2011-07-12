@@ -1,6 +1,7 @@
 body {
   padding: 50px;
-  font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: ‘Metrophobic’, "Lucida Grande", Helvetica, Arial; font-weight: 400;
+  background: #444;
 }
 
 input, select, button {
@@ -12,30 +13,70 @@ a {
 }
 
 .c {
-    width: 16px;
-    height: 16px;
-    float: left;
-    margin: 0 2px;
-    background: #aaa;
+  width: 16px;
+  height: 16px;
+  float: left;
+  margin: 0 2px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0px 0px 2px #999;
 }
-.active {
-    background: #faa;
-}
-.highlighted {
-    background: #aaf;
-}
+  .active {
+    background: #00bfbf;
+  }
+  .highlighted {
+    background: #00ff00;
+  }
+  .active.highlighted {
+    background: #ffc000;
+  }
 .row {
-    clear: left;
-    height: 20px;
+  clear: left;
+  height: 20px;
 }
 
 .button {
-    padding: 3px;
-    background: #999;
-    margin: 8px;
-    cursor: pointer;
+  background: #222 url(/imgs/alert-overlay.png) repeat-x;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  margin: 4px 4px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  line-height: 1;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  box-shadow: 0 1px 3px #999;
+  -moz-box-shadow: 0 1px 3px #999;
+  -webkit-box-shadow: 0 1px 3px #999;
+  text-shadow: 0 -1px 1px #222;
+  border-bottom: 1px solid #222;
+  position: relative;
+  cursor: pointer;
 }
 
+  #play {
+    background-color: #5dc15d;
+  }
+
+  #stop {
+    background-color: #dd7e7e;
+  }
+
 .hide {
-    display: none;
+  display: none;
 }
+
+#main {
+  width: 640px;
+  margin: 0 auto;
+  padding: 24px;
+  background-repeat: no-repeat;
+  background: #888;
+  box-shadow: 0px 0px 5px #000;
+}
+
+  .toolbar {
+    margin: 18px 0;
+  }

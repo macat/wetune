@@ -1,5 +1,5 @@
 require({ baseUrl : '/js/' });
-define(['/js/lib/jquery.js', '/js/lib/pubsub.js'],
+define(['/js/lib/pubsub.js'],
 /**
  * Sets up application-wide functionality, then figures out
  * which page we're on based on the body element's data-page
