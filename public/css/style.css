@@ -56,11 +56,11 @@ a {
   cursor: pointer;
 }
 
-  #play {
+  .play {
     background-color: #5dc15d;
   }
 
-  #stop {
+  .stop {
     background-color: #dd7e7e;
   }
 

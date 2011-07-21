@@ -3,6 +3,7 @@ function(tmpl, buzz, template_table){
   var 
     view = {
       table: [],
+      $tableContent: null,
       beat: 0,
       group: '',
       samples: [
@@ -19,14 +20,6 @@ function(tmpl, buzz, template_table){
         this.initTable();
 
         $.subscribe('services/wetune/changed', $.proxy(this, 'onChanged'));
-        $.subscribe('services/wetune/logout', $.proxy(this, 'onLogout'));
-
-
-        $('#machine').delegate('.c', 'click', $.proxy(this, 'onFieldClick'));
-        $('#play').click($.proxy(this, 'onPlay'));
-        $('#stop').click($.proxy(this, 'onStop'));
-
-        $('#machine,#controls').removeClass('hide');
       },
       onChanged: function(coor) {
         if (coor.active === 1){
@@ -39,10 +32,10 @@ function(tmpl, buzz, template_table){
             .removeClass('active');
         }
       },
-      onLogout: function() {
+      destroy: function() {
         this.onStop();
-        $('#machine,#controls').addClass('hide');
-        $('#machine').empty();
+        this.$tableContent.remove();
+        this.$tableContent = null;
       },
       onFieldClick: function(e) {
         var $element = $(e.target);
@@ -58,7 +51,10 @@ function(tmpl, buzz, template_table){
         }
       },
       activateField: function(x, y) {
-        this.table[y][x] = new Audio(this.samples[y]);
+        this.table[y][x] = new buzz.sound(this.samples[y], {
+                formats: ['ogg', 'mp3'],
+                autoload: true
+              });
       },
       deactivateField: function(x, y) {
         this.table[y][x] = 0;
@@ -67,10 +63,11 @@ function(tmpl, buzz, template_table){
         $.getJSON('/table/'+ this.group, $.proxy(this, 'onInitDataReceived'));
       },
       onInitDataReceived: function(data) {
+        // Create audio objects
         for (var i = 0; i < data.table.length; i++) {
           var row = [];
           for (var k = 0; k < data.table[i].length; k++){
-            if (data.table[i][k] == 0) {
+            if (data.table[i][k] === 0) {
               row.push(0);
             }
             else {
@@ -83,10 +80,17 @@ function(tmpl, buzz, template_table){
           this.table.push(row);
         }
         this.renderTable();
+        // Add eventhandlers
+        this.$tableContent.delegate('.c', 'click', $.proxy(this, 'onFieldClick'));
+        this.$tableContent.find('.play').click($.proxy(this, 'onPlay'));
+        this.$tableContent.find('.stop').click($.proxy(this, 'onStop'));
+        // Insert into DOM
+        $('#machine').append(this.$tableContent);
       },
       renderTable: function() {
-        $('#machine').html(tmpl(template_table, { rows: this.table }));
+        this.$tableContent = $(tmpl(template_table, { rows: this.table }));
       },
+
       intervalID: null,
       onPlay: function() {
         if (!this.intervalID) {
@@ -115,7 +119,9 @@ function(tmpl, buzz, template_table){
     var v = Object.create(view);
     $.extend(v, config);
     v.init();
-    return v;
+    return {
+      destroy: $.proxy(v, 'destroy')
+    };
   }; 
 });
 

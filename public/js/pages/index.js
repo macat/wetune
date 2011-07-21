@@ -1,6 +1,7 @@
 define(['services/wetune', 'views/table', 'views/user_group'], 
 function(wetune, table, user_group){
   require.ready(function(){
+
     // Initalize wetune service
     wetune({
       url: appSettings.serverIOSocket
@@ -9,9 +10,14 @@ function(wetune, table, user_group){
     user_group({});
 
     $.subscribe('views/user_group/loggedin', function(group, username){
-      table({
+      var tableView = table({
         group: group
       });
+      $.subscribe('services/wetune/logout', function(){
+        tableView.destroy();
+        tableView = null;
+      });
+
     });
 
   });

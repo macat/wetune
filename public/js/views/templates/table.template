@@ -1,3 +1,4 @@
+<div class="table">
 <% for (var i = 0; i < rows.length; i++) { %>
   <div class="row" data-rowindex="<%=i%>">
     <% var row = rows[i]; for (var k = 0; k < row.length; k++) { %>
@@ -7,4 +8,8 @@
     <% } %>
   </div>
 <% } %>
-  
+</div>
+<div class="controls">
+    <span class="play button">play</span>
+    <span class="stop button">stop</span>
+</div>
