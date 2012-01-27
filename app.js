@@ -27,7 +27,8 @@ app.configure('development', function(){
 
 app.configure('production', function(){
   app.use(express.errorHandler()); 
-  app.set('serverIOSocket', 'http://wetune.us:81');
+  var port = process.env.PORT || 3000;
+  app.set('serverIOSocket', 'http://0.0.0.0:' + port);
 });
 
 // Routes
