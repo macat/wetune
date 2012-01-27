@@ -74,7 +74,7 @@ var io = require('socket.io').listen(app);
 //});
 
 // Start server
-app.listen();
+app.listen(process.env.PORT);
 
 // Set up 'websockets'
 io.sockets.on('connection', function (socket) {
