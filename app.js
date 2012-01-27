@@ -6,8 +6,7 @@
 var express = require('express');
 
 var app = module.exports = express.createServer();
-var redis = require("redis"),
-    redis_client = redis.createClient();
+var redis_client = require('redis-url').connect(process.env.REDISTOGO_URL);
 
 // Configuration
 
@@ -75,7 +74,7 @@ var io = require('socket.io').listen(app);
 //});
 
 // Start server
-app.listen(3000);
+app.listen();
 
 // Set up 'websockets'
 io.sockets.on('connection', function (socket) {
